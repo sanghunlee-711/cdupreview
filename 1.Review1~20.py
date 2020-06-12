@@ -49,7 +49,7 @@ y = int(y)
 m = int(m)
 d = int(d)
 #print("{}.{2}.{2}".format(y,m,d))
-print("%4d.%2d.%2d" %(y, m,d)) -> formating으로 하는 방법 찾아보기
+print("%4d.%2d.%2d" %(y, m,d)) #-> formating으로 하는 방법 찾아보기
 
 #18,1020
 a, b = input().split("-")

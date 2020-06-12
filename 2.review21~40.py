@@ -10,7 +10,7 @@ for i in range(len(a)):
 #23,1025
 a = input()
 for i in range(len(a)):
-    print("[%d]" %(int(a[i]) * 10**(len(a)-(i+1)))
+    print("[%d]" %(int(a[i]) * 10**(len(a)-(i+1))))
 #24, 1026
 a, b, c = map(int,input().split(":"))
 print(b)
@@ -31,3 +31,7 @@ a = input()
 a = int(a)
 #print("{:#x}".format(a))
 print("%0x" %a)
+
+#31, 1033
+a = input()
+print("%d" %int(a,16))
