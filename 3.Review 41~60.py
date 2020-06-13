@@ -1,4 +1,23 @@
 #41, 1044
+a = int(input())
+print(a+1)
+
+#42, 1045
+a, b = map(int, input().split())
+print(a+b)
+print(a-b)
+print(a*b)
+print(a//b)
+print(a%b)
+print(a/b)
+
+#43, 1046
+a = int(input())
+print(a%b)
+
+#44, 1047
+a = int(input())
+print(a*2)
 
 #45, 1048
 a, b = map(int,input().split())
@@ -73,3 +92,27 @@ if a == 0 and b == 0:
     print(1)
 else:
     print(0)
+
+#56, 1059
+a = int(input())
+print(~a)
+
+#57, 1060
+
+a, b = map(int, input().split())
+print(a&b)
+
+#58, 1061
+a, b = map(int, input().split())
+print(a|b)
+
+#59, 1062
+a, b = map(int, input().split())
+print(a^b)
+
+#60, 1063
+a, b = map(int, input().split())
+if a > b:
+    print(a)
+elif a < b:
+    print(b)
