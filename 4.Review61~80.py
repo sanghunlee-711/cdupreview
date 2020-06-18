@@ -27,6 +27,7 @@ if c%2 == 0:
 else:
     print('odd')
 """
+"""
 #65, 1067
 a = int(input())
 
@@ -39,3 +40,18 @@ if a %2  == 0:
     print('even')
 else:
     print('odd')
+"""
+#66, 1068
+
+a = int(input())
+
+if 100 >= a >= 90:
+    print("A")
+elif 89>= a >=70:
+    print("B")
+elif 69>= a >=40:
+    print("C")
+elif 39>= a >=0:
+    print("D")
+
+    
