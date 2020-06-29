@@ -1,4 +1,4 @@
-
+"""
 # 61, 1064
 a, b, c = map(int, input().split())
 print(min(a,b,c))
@@ -107,3 +107,29 @@ if (a[i] != 0):
     print(a)[i]
 else:
     break;
+
+#72, 1074
+
+a = int(input())
+
+while (a != 0):
+    print(a)
+    a -= 1
+
+#73, 1075
+
+a = int(input())
+
+while (a != 0):
+    print(a-1)∫
+    a -= 1
+#74, 1076
+"""
+a = input()
+b = ord(a)
+i = ord('a') # a의 아스키 코드값이 필요하니
+while ( i <=  b):
+    print(chr(i), end=" ")
+    i = i+1
+
+#75
