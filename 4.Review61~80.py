@@ -124,7 +124,7 @@ while (a != 0):
     print(a-1)∫
     a -= 1
 #74, 1076
-"""
+
 a = input()
 b = ord(a)
 i = ord('a') # a의 아스키 코드값이 필요하니
@@ -132,4 +132,43 @@ while ( i <=  b):
     print(chr(i), end=" ")
     i = i+1
 
-#75
+#75, 1077
+a = int(input())
+for i in range(0,a+1,1):
+    print(i)
+
+#77, 1078
+a = int(input())
+sum = 0
+for i in range(0, a+1, 1):
+    if i%2 == 0:
+        sum += i
+print(sum)
+
+#78, 1079
+
+a = list(map(str, input().split()))
+for i in a:
+    if i == "q":
+        print(i)
+        break
+    else:
+        print(i)
+
+#79, 1080
+
+a = int(input())
+sum = 0
+for i in range(1, a+1, 1):
+    sum += i
+    if sum >= a:
+        print(i)
+        break
+"""
+#80, 1081
+m, n = input().split()
+m =int(m)
+n = int(n)
+for i in range(1, m+1,1):
+    for j in range(1,n+1,1):
+        print(i,j)
