@@ -43,7 +43,7 @@ print(a, a, a)
 a, b = input().split(':')
 print(a, b, end = ":" )
 
-#17,1019---------------------!
+#17,1019
 y, m, d = input().split(".")
 y = int(y)
 m = int(m)

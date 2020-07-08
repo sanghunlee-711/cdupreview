@@ -1,4 +1,5 @@
 """
+"""
 #81, 1082
 a = input()
 b = int(a,16)
@@ -76,7 +77,7 @@ print(e)
 a,r,n = map(int,input().split())
 what = a*r**(n-1)
 print(what)
-"""
+
 #90, 1091
 a, m ,d ,n =map(int, input().split())
 #what = a*(n-1)*(m*(n-1)+d)
