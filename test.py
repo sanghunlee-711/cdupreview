@@ -261,7 +261,7 @@ for i in range(n):
     t.forward(line)
     t.left(360/n)
 t.mainloop()
-
+####
 a = [10,20,30]
 a.remove(20)
 print(a)
@@ -710,7 +710,7 @@ a ={i for i in range(1,101)if i%3 == 0}
 b ={i for i in range(1,101)if i % 5 == 0}
 print(a&b)
 print(set.intersection(a,b))
-"""
+
 n, m = map(int, input().split())
 a = {i for i in range(1,n+1,1) if n%i == 0}
 b = {j for j in range(1,m+1,1) if m%j == 0}
@@ -722,3 +722,235 @@ if type(divisor) == set:
     result = sum(divisor)
 
 print(result)
+
+#파이썬으로 파일을 생성하고 문자열 넣기
+file = open('hello.txt','w') #hello.txt파일을 쓰기모드로(w)열기,w는 write의 쓰다이다.
+file.write('Hello, world!') #파일객체를 얻었으니 내용바꿔줌
+file.close() #파일객체 닫기
+
+#문자열 읽기
+file = open('hello.txt','r') #hello.txt파일을 읽기모드(read)로 열기. 파일객체 반환
+s=file.read() #파일에서 문자열 읽기
+print(s) #Hello,world!
+file.close() #파일객체닫기
+
+#매번 close로 닫으면 귀찮으니 with as 사용하여 자동으로 파일객체 닫기// with as 사용하면 파일을 사용한뒤 자동으로 파일객체를 닫아준다.
+with open('hello.txt', 'r')as file: #hello.txt파일을 읽기모드(r)로 열기
+    s = file.read() # 파일에서 문자열 읽기
+    print(s) # Hello,world!
+
+#문자열 여러줄을 파일에 넣기
+with open('hello.txt', 'w')as file:
+    for i in range(3):
+        file.write("Hello, world! {0}\n".format(i))
+
+#리스트에 들어있는 문자열을 파일에 써넣기
+
+lines = ['안녕하세요.\n', '파이썬\n', '코딩도장입니다.\n']
+
+with open('hello.txt', 'w')as file:
+    file.writelines(lines)
+
+#파일의 내용을 한줄씩 리스트로 가져오기 ( read는 내용을 읽어 문자열로 가져오지만 readlines는 파일의 내용을 한줄 씩 리스트 형태로 가져온다)
+with open('hello.txt','r')as file:
+    lines = file.readlines()
+    print(line)
+
+#파일의 내용을 한줄 씩 읽기
+with open('hello.txt', 'r')as file:
+    line = None  #line != ''와 충돌하지 않게 하기위해 None으로 미리 변수선언
+    while line != '': #빈문자열이면 멈춤 문자열이 존재하면 계속 반복
+        line = file.readline() #문자열 한줄씩 읽어서 변수에 저장
+        print(line.strip('\n'))
+# readline에서는 while을 쓰는것이 좋은데 파일에 문자열이 몇줄이나 있는지 모르기 때문이다.  
+
+#for 반복문으로 파일의 내용을 줄단위로 읽기
+with open('hello.txt', 'r')as file: #hello.txt파일을 읽기모드(r)로 열기
+    for line in file: #for에 파일객체를 지정하면 파일의 내용을 한줄씩 읽어서 변수에 저장함
+        print(line.strip('\n')) #파일에서 읽어온 문자열에서 \n 삭제하여 출력
+
+#파일객체는 이터레이터라 변수여러개에 저장하는 언패킹도 가능하다
+file = open('hello.txt', 'r')
+a,b,c =  file
+print(a,b,c) #이때 할당변수의 개수와 파일에 저장된 문자열의 줄 수가 일치해야한다.
+
+#파이썬은 객체를 파일에 저장하는 pickle 모듈을 제공한다.
+#객체를 파일에 저장하는것을 pickling, 파일에서 객체를 읽어오는 과정을 unpickling이라고 한다.
+import pickle
+
+name = 'james'
+age = 18
+address = '서울시 용산구 한남동'
+scores = {'korean': 90, 'english': 95, 'mathematics': 85, 'science': 82}
+
+with open('james.p', 'wb')as file: #james.p 파일을 바이너리쓰기모드(writebinary)로 열기
+    pickle.dump(name, file)
+    pickle.dump(age, file)
+    pickle.dump(address, file)
+    pickle.dump(scores, file)
+
+#unpickling하기
+import pickle
+
+with open('james.p', 'rb')as file:
+    name = pickle.load(file)
+    age = pickle.load(file)
+    address = pickle.load(file)
+    scores  = pickle.load(file)
+    print(name)
+    print(age)
+    print(address)
+    print(scores)
+
+
+#파일에서 10자 이하인 단어 개수세기
+
+#1.문자열파일만들기
+words = ['anonymously\n',
+        'compatibility\n',
+        'dashboard\n',
+        'experience\n',
+        'photography\n',
+        'spotlight\n',
+        'warehouse\n']
+
+with open('words.txt', 'w')as file:
+    file.writelines(words)
+
+
+#2 단어개수세기
+with open('words.txt', 'r')as file:
+    count = 0
+    words = file.readlines()
+    for word in words:
+        if len(word.strip('\n')) <= 10:
+            count += 1
+    print(count)
+
+#공백으로 문자열 분리 뒤 c가 존재하는 단어만 가져오기
+with open('words.txt', 'r')as file:
+    words = file.readlines()
+
+    for word in words: #
+        word2 = word.split() #
+    
+    for i in word2: 
+        if 'c' in i: #
+            print(i.strip(',.'))
+
+
+#문자열을 응용하여 회문판별 및 N-gram만드는방법
+#회문은 거꾸로 읽어도 제대로 읽은것과 같은문장임(level, SOS), 즉 가ㅏ운데 문자를 기준으로 왼쪽 오른쪽 문자가 같음.
+#회문(palindrome)은 유전자 염기서열 분석, N-gram은 빅데이터 분석, 검색엔진에서 많이 쓰인다.
+
+word = input('단어를 입력하세요')
+
+is_palindrome = True #회문판별값을 저장할 변수, 초기값은 True
+for i in range(len(word) // 2): #0부터 문자열 절반만큼 반복
+    if word[i] != word[-1-i]: #왼쪽문자와 오른쪽 문자를 비교하여 문자가다르면 회문이 아님
+        is_palindrome = False
+        break
+print(is_palindrome)
+#판별시 문자열길이가 중요한데 홀수 길이면 가운데 글자 바로 앞까지만 검사하게됨.
+
+#시퀀스 객체의 슬라이스를 활용하여 간단하게 판별하기
+word = input('단어를입력하세요:')
+print(word == word[::-1])#원래의 문자열과 반대로 뒤집은 문자열을 비교 # 전체에서 인덱스 1씩 감소시키면서 요소를 가져오므로 반대로 뒤집은것과 같음
+
+
+#반복가능한 객체의 요소순서를 반대로 뒤집는 Reversed를 사용해도됨.
+#list에 문자열을 넣으면 하나하나가 리스트의 요소로 들어가므로 비교 가능
+word = 'level'
+list(word) == list(reversed(word))
+
+#join, reversed 메소드 사용하기
+word = 'level'
+word == ''.join(reversed(word))#join은 구분자 문자열과 문자열 리스트의 요소를 연결한다. 여기서 빈문자열''에 reversedword의 요소를 연결했으므로 문자순서가 반대로된 문자열을 얻을 수 있다
+
+
+#N-gram은 문자열에서 N개의 연속된 요소를 추출하는 방법이다. 
+#2-grma씩 출력하기
+text = 'Hello'
+
+for i in range(len(text)-1): #2gram이므로 홀수이니까 문자열 끝에서 한글자 앞까지만 반복
+    print(text[i], text[i+1], sep = '') #현재문자와그다음문자 출력
+for i in range(len(text)-2): #3gram
+    print(text[i], text[i+1],text[i+2], sep='')
+
+#단어단위 n-gram
+text = 'this is python script'
+words = text.split() #공백을 기준으로 문자열을 분리하여 리스트로 만듦
+
+for i in range(len(words)-1):
+    print(words[i], words[i+1])
+
+#zip을 이용한 ngram
+text = 'hello'
+
+two_gram = zip(text, text[1:])
+for i in two_gram:
+    print(i[0], i[1], sep='')
+#zip은 보통 리스트 두개를 딕셔너리로 만들때 사용했는데 위와 같이 사용하면 한개씩 밀린상태에서 각 문자를 묶은 튜플이 생성됨.
+
+text = "this is python script"
+words = text.split()
+print(list(zip(words,words[1:])))
+
+#zip에 일일히 text[0:], text[1:]등을 넣었던것을 반복문으로 바꿔서 처리해줌.
+text = 'hello'
+print([text[i:] for i in range(3)])
+
+#zip은 반복가능한 객체 여러개를 콤마로 구분해서 넣어줘야 한다.
+a= list(zip(['hello', 'ello', 'llo']))
+print(a)
+#이렇게하면  요소가 3개들어있는 list1개를 넣어준것이기 때문에  3gram으로 출력되는 것이안됨.
+b=list(zip(*['hello','ello', 'llo']))
+print(b) 
+#zip에 각 요소를 콤마로 구분해서 넣어주려면 리스트앞에 *을 붙여야한다.
+text = "hello"
+c= list(zip(*[text[i:]for i in range(3)]))
+print(c)
+#이렇게 list 에 *을 붙이는 방법을 리스트언패킹이라고 한다.
+
+#입력된 숫자에 해당하는 단어단위 N-gram을 튜플로 출력해보자.[만약 입력된 문자열의 단어개수가 입력된 정수 미만이라면 worng을 출력]
+n = int(input())
+text = input()
+words = text.split() #입력된 한줄로 된 문자열 값은 split을 사용하여 분할한 뒤 words 변수에 저장
+
+if (len(words) < n): #입력된 숫자n 보다 단어갯수가 적으면 wrong 출력
+    print('wrong')
+else: #문자열 리스트는*[words[i:]for i in range(n)]을 통해 n 만큼 반복하여 리스트로 만들어준
+    n_gram = zip(*[words[i:]for i in range(n)])
+    for i in n_gram:
+        print(i)
+
+#words.txt 파일에서 회문인 단어만 다시 가지고 나오는 코드
+with open('words.txt','r')as file:
+    words = file.readlines()
+    for word in words:
+        word = word.strip('\n')
+        if word == word[::-1]:
+            print(word)
+
+
+def hello():
+    print('Hello, world!')
+hello()
+
+#내용이 없는 빈함수를 만들기 위해서는 
+def hello():
+    pass
+
+def add(a,b):
+    print(a+b)
+add(5, 7)
+"""
+#함수에서 doc string 사용하기 doc string윗줄에 다른코드가 오면 안된다.
+def add(a,b):
+    """이 함수는 a,b를 더한 뒤 결과를 반환하는 함수 입니다 ."""
+    return a + b
+
+x = add(10,20)
+print(x)
+print(add.__doc__) #함수의 독스트링을 출력하는 방법
+help(add) #help 에 함수이름을 넣으면 이름,매개변수,독스트링을 도움말로 출력해준다.
