@@ -945,12 +945,99 @@ def add(a,b):
     print(a+b)
 add(5, 7)
 """
+"""
 #함수에서 doc string 사용하기 doc string윗줄에 다른코드가 오면 안된다.
 def add(a,b):
-    """이 함수는 a,b를 더한 뒤 결과를 반환하는 함수 입니다 ."""
+    """"""이 함수는 a,b를 더한 뒤 결과를 반환하는 함수 입니다 .""""""
     return a + b
 
 x = add(10,20)
 print(x)
 print(add.__doc__) #함수의 독스트링을 출력하는 방법
 help(add) #help 에 함수이름을 넣으면 이름,매개변수,독스트링을 도움말로 출력해준다.
+
+def add(a,b):
+    return a + b
+#return을 사용하면 함수 바깥으로 반환 할 수 있다.
+
+x = add(10,20)
+print(x)
+#이렇게 하면 반환값이 x 에 저장되는 것임
+print(add(10,20))
+#이리해도 무방
+
+#매개변수가 없고 반환값만 있는 함수
+def one():
+    return 1
+x = one()
+print(x)
+
+
+def not_ten(a):
+    if a == 10:
+        return # 이렇게 함수 중간에서 빠져나오게 사용한다 if 와 조합일 때 특정조건에서 함수중간에서 빠져나오기 위해 사용
+    print(a, '입니다', sep = '')
+
+print(not_ten(5))
+print(not_ten(10))
+
+
+def add_sub(a,b):
+    return a+b, a-b
+
+x,y = add_sub(10,20)
+print(x)
+print(y)
+
+print(x,y) #이렇게 return으로 값을 여러개 반환하면 tuple이 반환된다.
+
+def one_two():
+    return (1,2) # return 1, 2  와 같다.
+
+#함수 호출(스택다이어그램으로 알아보기)
+#스택은 접시쌓기와 같이 접시를 차곡차곡쌓고 꺼낼때 위쪽부터 차례대로 꺼내는 방식이다.
+#파이썬에서는 접시쌓기와 방향이 반대인데, 함수가 아래쪽 방향으로 추가되고 함수가 끝나면 위쪽방향으로 사라진다.
+
+def mul(a, b):
+    c = a * b
+    return c
+
+def add(a, b):
+    c = a + b
+    print(c)
+    d = mul(a,b)
+    print(d)
+
+x = 10
+y = 20
+add(x,y)
+
+#몫과 나머지를 출력하는 함수 만들기
+
+x = 10
+y = 3
+
+def get_quotient_reaminder(a,b):
+    return a//b , a%b
+
+qoutient, reaminder = get_quotient_reaminder(x,y)
+print('몫: {0}, 나머지:{1}'.format(qoutient, reaminder))
+
+
+#사칙연산 반환 함수
+x,y = map(int, input().split())
+def calc(a,b):
+    return a+b, a-b, a*b, float(a/b)
+
+a,s,m,d = calc(x,y)
+print('덧셈:{0}, 뺄셈:{1},곱셈:{2},나눗셈:{3}'.format(a,s,m,d))
+
+#함수에 인수를 순서대로 넣는 방법을 인수(positional argument)라고 합니다. 인수의 위치가 정해져있는것.
+print(10,20,30)
+#위치 인수를 사용하는 함수를 만들고 호출하기
+def print_numbers(a,b,c):
+    print(a)
+    print(b)
+    print(c)
+"""
+
