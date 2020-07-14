@@ -1462,7 +1462,7 @@ n = int(input())
 c = countdown(n)
 for i in range(n):
     print(c(),end = ' ')
-"""
+
 
 #기사,마법사,집,나무,버튼,체크박스처럼 특정한 개념이나 모양으로 존재하는것을
 #객체(object)라고 한다, 그리고 프로그래밍으로 객체를 만들 때 사용하는것이 클래스(class)이다.
@@ -1483,3 +1483,66 @@ james = Person()
 #메서드 호출하기
 #메서드는 클래스가 아니라 인스턴스를 통해 호출 된다.
 james.greeting()
+#이렇게 인스턴스를 통해 호출하는 메서드를 인스턴스 메서드라고 부른다.
+
+
+#지금까지 사용한 int, dict, list등도 사실 클래스이다. 이 클래스로 인스터스를 만들고
+#메서드를 사용했다. 예를 들어 보자
+
+a = int(10) #int class에 10을 넣어 instance a를 만들었다
+print(a)
+b = list(range(10)) #list 클래스에 range(10)을 넣어 인스턴스 b륾 만들엇다.
+b.append(20) # 인스턴스 b에서 메서드 append를 호출해서 값을 추가한다.
+print(b)
+c = dict(x = 10, y = 20) #dict클래스에 x=10, y =20을 넣어 인스턴스 c를 만들었다.
+print(c)
+
+class Person:
+    def greeting(self):
+        print('Hello')
+maria = Person()
+print(type(maria)) #<class '__main__.Person'>
+#이렇게 type을 이용하여 객체(instance)가 어떤 클래스인지 알 수 있다
+
+#클래스는 객체를 표현하는 문법인데 클래스로 인스턴스를 만든다니 헷갈림
+# 인스턴스와 객체는 사실 같은 것을 뜻하는데 객체만 지칭할때는 객체
+#하지만 객체가 클래스와 연관지어 이야기되면 인스턴스라고 부른다
+# 아래와 같이 리스트변수 a,b가 있으면 a,b는 객체이며 list 클래스의 인스턴스이다.
+a = list(range(10))
+b = list(range(20))
+
+#내용이 없는 빈 클래스는 아래와 같이 만들 수 있다.
+class Person:
+    pass
+
+#메서드 안에 메서드 호출하기
+#메서드안에 메서드를 호출할때는 다음과 같이 self.method()형식으로 해야하며 self
+#없이 메서드 이름만 사용하면 클래스 바깥쪽에 있는 함수를 호출한다는 뜻이 되므로 주의해야한다.
+class Person:
+    def greeting(self):
+        print('Hello')
+    
+    def hello(self):
+        self.greeting() #sef.method()형식으로 클래스안의 메서드를 호출
+james = Person()
+james.hello() # Hello
+
+
+#특정클래스의 인스턴스인지 확일 할때는 isinstance 함수를 사용한다 . boolean 값으로 출력됨.
+class Person:
+    pass
+
+james = Person()
+print(isinstance(james, Person))
+"""
+#isinstance는 주로 객체의 자료형을 판단할때 사용하는데 팩토리얼을 구할때는 예로들어 보자
+
+
+def factorial(n):
+    if not isinstance(n, int) or n < 0: #실수와 음의 정수는 계산할 수 없게 만드는 조건을 만들 떄 사용한다.
+        return None # 정수일 때만 계산하도록 만들기 위해 isinstance 를 사용
+    if n == 1:
+        return 1
+    return n* factorial(n - 1)
+
+print(factorial(5))
