@@ -1035,9 +1035,451 @@ print('덧셈:{0}, 뺄셈:{1},곱셈:{2},나눗셈:{3}'.format(a,s,m,d))
 #함수에 인수를 순서대로 넣는 방법을 인수(positional argument)라고 합니다. 인수의 위치가 정해져있는것.
 print(10,20,30)
 #위치 인수를 사용하는 함수를 만들고 호출하기
+
 def print_numbers(a,b,c):
     print(a)
     print(b)
     print(c)
+print_numbers(10,20,30) #이렇게하면 각줄에 숫자하나  씩 출력된다
+
+x = [10,20,30]
+print_numbers(*x) # *을 붙여언패킹 *은 함수(*리스트), 함수(*[애스터리스크]튜플)등으로 사용가능하며 위와 같은 기능을 보여줌.
+
+#위치 인수와 리스트 언패킹은 인수의 개수가 정해지지 않은 가변인수에 사용한다. 같은 함수에 인수한개를 넣을수도 열개를 넣을수도 안 넣을 수도 있으니까
+#가변인수는 아래와 같이 매개변수앞에 애스터리스크(*)를 붙여 만든다.
+#여기서 args는 튜플이라 for문으로 반복가능하다.
+def print_numbers(*args):
+    for arg in args:
+        print(arg)
+
+print_numbers(10)
+print_numbers(10,20,30,40)
+x = [10]
+y = [10,20,30,40]
+print_numbers(*x)
+print_numbers(*y)
+#이렇게 함수를 만들때 매개변수에 * 를 붙여주면 가변인수함수를 만들 수 있다.그리고 이런 함수를 호출 할때는 인수를 각 각 넣거나 리스트(튜플)의 언패킹(*)을 사용하면된다.
+
+
+#고정인수와 가변인수 함께 사용하기
+def print_numbers(a, *args):
+    print(a)
+    print(args)
+
+print_numbers(1)
+print_numbers(1, 10,20)
+print_numbers(*[1,10,20])
+#a 에는 하나가 배정되고 나머지는 알아서 가변인수로 넘어감
+
+def personal_info(name, age, address):
+    print('이름: ', name)
+    print('나이: ', age)
+    print('주소: ', address)
+#이와 같이 함수를 사용할때 만약 인수의 순서에 대한 정보를 알지 못하면 이상한 출력값이 나올 수도 있다.
+# 그것을 방지하기 위해서 keyword argument기능을 제공한다. 말그대로 인수에 키워드를 붙일 수 있음
+#personal_info('홍길동', '서울시 용산구 이촌동', 30)
+personal_info(name = '홍길동',  address = '서울시 용산구 이촌동', age = 30) #순서를 지키지 않아도 원하는순서에 알맞게 출력할 수 있음.
+x = {'name':'홍길동', 'age':30,'address':'서울시 용산구 이촌동'}
+personal_info(**x) #이렇게 딕셔너리에 **을 붙여 함수에 넣어주면 (키워드가 반드시 문자열 형태일때) 딕셔너리에 저장된 값을 출력할 수 있음.
+#딕셔너리의 키이름과 함수의 매개변수 이름이 같을 때 사용가능. **두번쓰는 이유는 딕셔너리는 키와 발류가 있기에 그럼 한번만 쓰면 키값만 나온당
+
+#키워드 인수를 사용하는 가변 인수함수 만들기
+def personal_info(**kwargs):
+    for kw, arg in kwargs.items():
+        print(kw, ':', arg, sep = '')
+    
+#personal_info(name = '홍길동')
+#personal_info(name = '홍길동', age = 30, address = '서울시 용산구 이촌동')
+
+x = {'name': '홍길동'}
+personal_info(**x)
+y = {'name':'홍길동', 'age':30, 'address':'서울시 용산구 이촌동'}
+personal_info(**y)
+
+#보통 **kwargs 를 사용한 가변인수 함수는 다음과 같이 함수안에서 특정키가 있는지 확인한 뒤 해당기능을 사용한다.
+def personal_info(**kwargs):
+    if 'name' in kwargs: #in을 사용하여 딕셔너리안에 특정키가 있는 지 확인
+        print('이름:', kwargs['name'])
+    if 'age' in kwargs:
+        print('나이:', kwargs['age'])
+    if 'address' in kwargs:
+        print('주소:', kwargs['address'])
+
+#매개변수에 초기값 미리 지정하기
+#초기값이 지정된 변수는 제일 뒤에 둘 것.
+def personal_info(name, age, address = '비공개'):
+    print('이름: ', name)
+    print('나이: ', age)
+    print('주소: ', address)
+personal_info('홍길동', 30) 
+personal_info('홍길동', 30, '서울시 용산구 이촌동')
+
+#표준입력으로 국어,영어,수학,과학점수가 입력되고 가장높은점수,가장낮은점수,평균점수(실수)가 출력되게 만들자
+korean, english , mathematics, science =map(int, input().split())
+
+def get_min_max_score(*args):
+        return min(args), max(args) 
+
+def get_average(**kwargs):
+    return sum(kwargs.values())/len(kwargs)
+
+min_score, max_score = get_min_max_score(korean, english, mathematics, science)
+average_score = get_average(korean=korean, english=english,
+                            mathematics=mathematics, science=science)
+print('낮은 점수: {0:.2f}, 높은 점수: {1:.2f}, 평균 점수: {2:.2f}'
+      .format(min_score, max_score, average_score))
+ 
+min_score, max_score = get_min_max_score(english, science)
+average_score = get_average(english=english, science=science)
+print('낮은 점수: {0:.2f}, 높은 점수: {1:.2f}, 평균 점수: {2:.2f}'
+      .format(min_score, max_score, average_score))
+
+#함수안에서 자기 자신을 호출하는 방식을 재귀호출(Recursive call)이라고 한다.
+#재귀호출은 잘 사용하지 않지만 알고리즘을 구현할 때 매우 유용하다
+
+#이렇게 하면 error 가 발생하며 1000번이 최대인 재귀를 넘어서고 hello()에 의해 계속 깊어지기 때문
+def hello():
+    print('Hello, world!')
+    hello()
+
+hello()
+
+#재귀호출 종료조건 만들기
+def hello(count):
+    if count == 0:
+        return
+    
+    print('Hello, world!', count)
+
+    count -= 1
+    hello(count)# 5로 들어온값에 -1 이 된 4로 다시 hello 함수를 부르고 이와같은 과정을 0이 될때 까지 반복
+
+hello(5)
+
+#재귀호출로 팩토리얼 구하기
+def factorial(n):
+    if n == 1: # n 이 1 일때 1을 반환하고 끝냄
+        return 1
+    return n * factorial(n-1) #n 과 팩토리얼함수에 n-1을 넣어서 반환된 값을 곱함.
+
+print(factorial(5))
+
+def is_palindrome(word):
+    if len(word) < 2:
+        return True
+    if word[0] != word[-1]: #제일 첫글자와 마지막 글자가 다를때 false 반환
+        return False
+    return is_palindrome(word[1:-1])
+print(is_palindrome('hello'))
+print(is_palindrome('level'))
+
+
+def fib(n):
+    if n < 3:
+        return 1
+    else: 
+        return fib(n-1) + fib(n-2)
+
+n = int(input())
+print(fib(n))
+2,4,6,8,
+#람다 표현식 사용하기
+#def 표현식이 아닌 람다 표현식으로 익명의 함수를 만드는 방법을 알아보자.
+#식표현이 간단해 주로 다른함수의 인수로 넣을때 사용된다.
+
+def plus_ten(x):
+    return x + 10
+
+print(plus_ten(1))
+
+plus_ten2 = lambda x: x + 10 #람다표현식은 이름이 없는 함수를 만든다. 그래서 변수 할당을 해줌
+print(plus_ten2(1))
+
+#람다 표현식 자체를 한번에 호출해버리기
+print((lambda x: x+10)(1)) #람다표현식 안에는 변수를 만들 수 없으니 유의해야한다. 변수를 만들필요가 있는 함수는 def를 쓰자
+y = 10 #이렇게 밖에 변수를 설정해서 사용 가능하다.
+print((lambda x: x+y)(1))
+
+#lambda 표현식을 사용하는 대표적인 예가 Map이다
+def plus_ten(x):
+    return x + 10
+
+list(map(plus_ten, [1,2,3])) #이렇게 map함수를 사용할 수도 있다 list, Str, int등의 자료형 변경만이 아닌
+
+#이렇게 간단하게 바꿀 수 있다.
+list(map(lambda x: x+10, [1,2,3]))
+
+#람다표현식에서 조건부 표현식 사용하기
+a = [1,2,3,4,5,6,7,8,9,10]
+print(list(map(lambda x: str(x) if x % 3 ==0 else x, a)))
+#3의 배수를 문자열로 바꿈 여기서는 ':' 를 조건문안에 붙이지 않는 것에 유념하자
+#lambda식에서는 if 를쓰면 무조건 else도 같이 써야한다.
+
+#map 에 객체 여러개 넣기
+a =[1,2,3,4,5]
+b =[2,4,6,8,10]
+print(list(map(lambda x,y: x*y, a,b)))#객체 갯수에 맞게 ,를 이용하여 넣어주면된다.
+
+#filter 사용하기: filter는 반복가능 객체에서 특정조건에 맞는 요소만 가져온다 반환값이 true일때만 가져온다.
+def f(x):
+    return x > 5 and x < 10
+
+a = [8,3,2,10,15,7,1,9,0,11]
+print(list(filter(f,a))) #함수 f 에 참인 요소만 가져온다
+#lambda식으로 표현해보기
+a = [8,3,2,10,15,7,1,9,0,11]
+print(list(filter(lambda x: x>5 and x<10, a)))
+
+#reduce 사용해보기
+from functools import reduce
+def f(x,y):
+    return x + y
+
+a = [1,2,3,4,5]
+from functools import reduce
+print(reduce(f,a))
+#reduce는 누적값을 반환해줌, 3+3+4+5
+
+#lambda식으로는
+a =[1,2,3,4,5]
+from functools import reduce
+reduce(lambda x,y: x+y,a)
+#reduce는 반복문으로도 표현가능, 이제 삭제되서 필요없으니까 반복문 익히자
+a =[1,2,3,4,5]
+x = a[0]
+for i in range(len(a)-1):
+    x = x + a[i+1]
+
+print(x)
+
+# 파일이름중 확장자가 .jpg, .png인것만 출력되는 lambda식 만들기
+files = ['font', '1.png', '10.jpg', '11.gif', '2.jpg', '3.png', 'table.xslx', 'spec.docx']
+
+print(list(filter(lambda x: x.find('jpg') != -1 or x.find('.png') != -1, files)))
+#filter 와 find의 사용법 유의하여 보기 꼭 익히기(크롤링에 필수 임)
+
+files = ['1.jpg', '10.png', '11.png', '2.jpg', '3.png']
+#files = input().split()
+print(list(map(lambda x: "{0:03d}.{1}".format(int(x.split('.')[0]),x.split('.')[1]) ,files)))
+
+x = '7.ronaldo'
+print(x.split('.')[0], x.split('.')[1])
+
+
+#클로저사용하기
+
+#전역범수: 스크립트 전체에서 접근할 수 있는 변수를 말한다.
+
+x = 10 #전역변수
+def foo():
+    print(x) #전역변수 출력
+foo()
+print(x) #전역변수 출력
+
+#만약 변수 x를 foo 안에서 만들면 어떻게 될까
+def foo():
+    x = 10
+    print(x)
+
+foo()
+print(x)
+#error가 발생한다. 이렇게 지정된 함수 안에서만 접근 할 수 있는 것을 지역변수라 한다
+
+#함수안에서 전역변수 변경하기
+x = 10
+def foo():
+    x = 20
+    print(x)
+foo()
+print(x)
+#20, 10 으로 출력되어 변경되지 않는 것을 볼 수 있다. 이름만 같을 뿐 다른 변수인것이다
+
+#global키워드를 이용한 변경
+#global키워드를 이용하면 함수안에서 전역변수의 값을 변경할 수 있다.
+x = 10 # 전역변수
+def foo():
+    global x #전역 변수 x를 사용하겠다고 설정
+    x = 20 #이제 x 는 전역변수
+    print(x) #전역변수 출력
+
+foo()
+print(x) #전역변수 출력
+
+
+#전역변수 x가 없을때도 global 키워드를 사용하며 함수안에서 만들 수 있다.
+def foo():
+    global x
+    x = 20
+    print(x)
+
+foo()
+print(x)
+
+
+#네임스페이스
+#파이썬에서 변수는 네임스페이스에 저장되며 locals 함수를 사용하면 현재 네임스페이스를 딕셔너리 형태로 출력해준다.
+
+def foo():
+    x = 10
+    print(locals())
+foo()
+# {'x': 10}
+
+#함수안에서 함수 만들기
+def print_hello():
+    hello = "Hello, world!"
+    def print_message():
+        print(hello)
+    print_message()
+
+print_hello()
+#print_hello > print_message순으로 실행된다.
+
+#지역변수의 범위를 보면 위에 함수에서 보이듯 print_message 바깥에 있는 hello 지역변수를 안에서 쓴것을 알 수 있다
+#즉, 바깥쪽 함수의 지역 변수는 그 안에 속한 모든 함수에서 접근할 수 있다는것이다.
+#지역 변수 변경하기
+
+#아래와 같이 실행하면 10이 출력된다. 보기에는 바깥함수의 x를 변경하는 것 같으나
+#실제로는 안쪽B함수에 새로운 변수가 생성된것이다(이름만 같은것임)
+def A():
+    x = 10
+    def B():
+        x = 20
+    B()
+    print(x)
+
+A()
+
+#현재 함수 바깥쪽에 있는 지역변수의 값을 변경하러면 nonlocal 키워드를 사용해야 한다.
+def A():
+    x = 10
+    def B():
+        nonlocal x #이렇게 바깥쪽함수의 지역변수를 사용할 수 있다.
+        x = 20
+    B()
+    print(x)
+A()
+
+#nonlocal사용
+#nonlocal은 현재 함수의 바깥쪽에 있는 지역변수를 찾을 때 가장 가까운 함수부터 먼저 찾는다.
+def A():
+    x = 10
+    y = 100
+    def B():
+        x = 20
+        def C():
+            nonlocal x
+            nonlocal y
+            x = x + 30
+            y = y + 300
+            print(x)
+            print(y)
+        C()
+    B()
+A()
+#이렇게하면 50과 400 이 출력되는데 x를 가장 마지막에 바꾼 C함수에서 그 바로위의 B함수의
+#지역변수를 가져다 썻기 때문이다
+
+#global로 전역변수 사용하기
+
+x = 1
+def A():
+    x = 10
+    def B():
+        x = 20
+        def C():
+            global x
+            x = x+30
+            print(x)
+        C()
+    B()
+A()
+#nonlocal을 사용하면 50
+#global을 사용하면 31이 나온다(글로벌은 전역변수를 가져오기 때문)
+
+#함수를 클로저 형태로 만드는 방법
+def calc():
+    a = 3
+    b = 5
+    def mul_add(x):
+        return a*x + b #함수 바깥쪽에 있는 지역변수 a,b를 사용하여 계산
+    return mul_add #mul_add함수를 반환
+c = calc() # calc함수에서 mul_add함수를 반환했으므로 c 에들어가는것은 mul_add함수가 된다.
+print(c(1),c(2),c(3),c(4),c(5))
+#8,11,14,17,20
+
+#lambda로 클로져 만들기
+#클로저는 함수를 둘러싼 환경을 유지했다가 나중에 다시 사용하는 함수를 뜻합니다.
+#클로저는 지역 변수와 코드를 묶어서 사용하고 싶을때 사용하며 프로그램의 흐름을 변수에
+#저장할 수 있다.
+def calc():
+    a = 3
+    b = 5
+    return lambda x: a*x +b
+c = calc()
+print(c(1),c(2),c(3),c(4),c(5))
+
+def calc():
+    a = 3
+    b = 5
+    total = 0
+    def mul_add(x):
+        nonlocal total #클로저의 지역변수를 바꿀때도 nonlocal 사용하깅
+        total = total + a*x + b
+        print(total)
+    return mul_add
+c = calc()
+c(1)
+c(2)
+c(3)
+# a*x +b의 결과를 함수 calc의 지역변수 total에 누적함.
+
+#호출횟수를 세는 함수 만들기
+def counter():
+    i = 0
+    def count():
+        nonlocal i
+        i += 1
+        return i
+    return count #함수 반환시에는 괄호를 붙이지 않는다구!
+
+
+c = counter()
+for i in range(10):
+    print(c(), end =' ')
+
+#정수 입력시 함수 c 호출마다 숫자가 1 씩 줄어들게 만드시오
+def countdown(n):
+    def down():
+        nonlocal n            
+        n -= 1
+        return n+1
+    return down
+
+
+n = int(input())
+
+c = countdown(n)
+for i in range(n):
+    print(c(),end = ' ')
 """
 
+#기사,마법사,집,나무,버튼,체크박스처럼 특정한 개념이나 모양으로 존재하는것을
+#객체(object)라고 한다, 그리고 프로그래밍으로 객체를 만들 때 사용하는것이 클래스(class)이다.
+#게임캐릭터는 체력 마나 물리 공격력 등이 필요하고 캐릭터중 기사캐릭터는 칼로베기, 찌르기, 스킬이 있어야한다.
+#체력,마나 물리공격력 주문력등의 데이터를 클래스의 속성이라 한다. 베기 찌르기 등의 기능을 메서드(method)라고 한다.
+#이렇게 프로그래밍방법을 객체지향(object orieted)프로그래밍이라고 한다.
+
+#클래스를 사용해서 객체를 표현하고 만들어보자
+#클래스와 메서드 만들기 메서드는 클래스안에 들어있는 함수를 뜻한다.
+#클래스이름은 대문자로 시작하는 규칙이 있다.
+#메서드의 첫번째 매개변수는 반드시 self를 지정해야한다.
+class Person:
+    def greeting(self):
+        print('Hello')
+#클래스사용은 클래스에 괄호를 붙인 뒤 변수에 할당한다.
+#여기서 james 가 Person의 인스턴스(instnace)이다.
+james = Person()
+#메서드 호출하기
+#메서드는 클래스가 아니라 인스턴스를 통해 호출 된다.
+james.greeting()
