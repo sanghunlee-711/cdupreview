@@ -1534,10 +1534,10 @@ class Person:
 
 james = Person()
 print(isinstance(james, Person))
-"""
+
 #isinstance는 주로 객체의 자료형을 판단할때 사용하는데 팩토리얼을 구할때는 예로들어 보자
 
-
+#factorial을 출력하는 함수 만들기
 def factorial(n):
     if not isinstance(n, int) or n < 0: #실수와 음의 정수는 계산할 수 없게 만드는 조건을 만들 떄 사용한다.
         return None # 정수일 때만 계산하도록 만들기 위해 isinstance 를 사용
@@ -1546,3 +1546,139 @@ def factorial(n):
     return n* factorial(n - 1)
 
 print(factorial(5))
+
+#클래스에서 속성만들고 사용해보기
+#속성을 만들때는 __init__메서드 안에서 self.속성에 값을 할당한다.
+class Person:
+    def __init__(self):
+        self.hello = '안녕하세요' #__init__메서드에서 속성을 만듬
+        #self뒤에 .을붙여 hello를 할당함
+    
+    def greeting(self):
+        print(self.hello)
+james = Person() #이렇게되면 self에가 James에 할당됨
+james.greeting()
+#__init__ 메서드는 james= Person()클래스 처럼
+#인스턴스를 만들 때 호출되는 특별한 메서드이다 인스턴스(객체)를 초기화하는 __init__
+# 앞뒤로 __가 붙은 메서드는 파이썬이 자동으로 호출해주는 메서드로 스페셜 메서드라한다.
+
+james = Person()
+
+#클래스로 인스턴스를 만들 때 값 받기
+class Person:
+    def __init__(self, name, age ,address):
+        self.hello = '안녕하세요'
+        self.name = name
+        self.age = age
+        self.address = address
+    
+    def greeting(self):
+        print('{0}저는 {1}입니다.'.format(self.hello, self.name))
+
+maria = Person('마리아', 20, '서울시 서초구 반포동') #maria의 인스턴스가 만들어짐
+maria.greeting() #안녕하세요 저는 마리아 입니다.
+
+print('이름: ', maria.name)
+print('나이: ', maria.age)
+print('주소: ', maria.address)
+#클래스 바깥에서 속성에 접근 할 때는 인스턴스.속성 형시으로 접근한다.ex) maria.name, maria.age
+#이렇게 인스턴스를 통해 접근하는 속성을 인스턴스 속성이라고 한다.
+
+#클래스의 위치인수,키워드 인수
+class Person:
+    def __init__(self, *args):
+        self.name = args[0]
+        self.age = args[1]
+        self.address = args[2]
+maria = Person(*['마리아', 20, '서초구반포동']) #매개변수 값 가져오려면arg[x]로 언패킹 이용
+
+#키워드 인수와 딕셔너리 언패킹 이용요구시
+class Person:
+    def __init__ (self, **kwargs):
+        self.name = kwargs['name']
+        self.age = kwargs['age']
+        self.address = kwargs['address'] #키워드를 지정하면서 불러줘야함 arg는 인수값으로 부른것과 상이함
+
+maria = Person(name = '마리아', age = '20', address = '서울시 서초구 반포동')
+#아래로도 실행가능
+maria2 = Person(**{'name': '마리아', 'age':20,'address' : '서울시 서초구 반포동'})
+
+#인스턴스를 생성한 뒤에 속성 추가하기, 특정속성만 허용하기
+class Person:
+    pass
+
+maria = Person() #인스턴스생성
+maria.name = '마리아' #인스턴스 만든 뒤 속성 추가
+#이렇게 생성된 속성은 해당 인스턴스에만 생성되므로 다른 클래스의 인스턴스를 만들 시 추가가 안됨.
+#james = Person() , james.name을 하면 다시 할당해야한다 '마리아'라는 것을 곧바로 불러올 수 없음.
+
+class Person:
+    def greetinf(self):
+        slef.hello = '안녕하세요' #greetinf method에 hello 속성을 추가한것
+maria.Person()
+#maria.hello #아직 hello 속성이 없음 greeting 메서드를 호출해야함
+maria.greeting()
+maria.hello
+
+#인스턴스에 자유롭게 속성을 추가할 수 있지만 특정속성을 제한하고 싶을때 클레스에 slots에 허용할 속성이름을
+#리스트로 따로 넣어주면 된다(이름은 반드시 문자열로)
+class Person:
+    __slots__ = ['name', 'age']
+
+mari.Person()
+maria.name = '마리아'
+maria.age = 20
+maria.address = '서울시' #에러발생함.
+
+#비공개 속성사용하기
+class Person:
+    def __init__(self, name, age ,address):
+        self.hello ='안녕하세요'
+        self.name = name
+        self.age = age
+        self.address = address
+        #클래스안에  init메서드에 name,age,address 속성(attribute)이 있음
+maria = Person('마리아', 20, '서울시 서초구 반포동')
+print(maria.name)
+#이 name등의 속성등은 클래스 밖에서도 인스턴스(maria).속성(name)등의 형식으로
+#클래스 밖에서도 접근 가능하다
+
+#비공개속성을 사용해보기
+class Person:
+    def __init__(self, name, age, address, wallet):
+        self.name = name
+        self.age = age
+        self.address = address
+        self.__wallet = wallet #비공개속성은 변수앞에 __ 를 붙여 비공개 속성으로 만듦
+
+maria = Person('마리아', 20, '서울시', 10000)
+print(maria.__wallet)
+
+#돈을 내느 pay method 만들기
+class Person:
+    def __init__(self, name, age, address, wallet):
+        self.name = name
+        self.age = age
+        self.address = address
+        self.__wallet = wallet #변수앞에 __를 붙여서 비공개 속성으로 만듦
+
+    def pay(self, amount):
+        self.__wallet -= amount #비공개속성은 동일 클래스안의 메서드에서만 접근 가능함.
+        print('이제 {0}원 남았네요.'.format(self.__wallet))
+
+maria = Person('마리아', 20, '서울', 10000)
+maria.pay(30)
+#이렇게 비공개 속성은 클래스바깥으로 드러내고 싶지 않을 때 사용한다. 중요한 값일때 바깥에서 함부로 수정하면 안될때 사용
+
+#메서드(함수)도 비공개로 사용이 가능하다
+
+class Person():
+    def __greeting(self):
+        print('Hello')
+    
+    def hello(self):
+        self.__greeting() #Person 클래스안에서 비공개 메서드인 greeting을 호출함
+
+james = Person()
+james.__gretting()
+"""
