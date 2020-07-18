@@ -1681,4 +1681,35 @@ class Person():
 
 james = Person()
 james.__gretting()
+
+#게임 캐릭터 클래스 만들기
+class Knight():
+    def __init__(self, health, mana, armor):
+        self.health = health #매개변수를 그대로 속성으로 만들어준다.
+        self.mana = mana
+        self.armor = armor
+
+    def slash(self):
+        print('베기')
+
+
+
+x = Knight(health = 542.5, mana = 210.3, armor = 38) #클래스에 값을 넣어 인스턴스 생성
+print(x.health, x.mana, x.armor) #인스턴스 속성출력
+x.slash() #인스턴스로 메서드를 호출하고 있으므로 knight클래스안에 slah 메서드를 만든다
 """
+class Annie():
+    def __init__(self, health, mana, ability_power):
+        self.health = health
+        self.mana = mana
+        self.ability_power = ability_power
+
+    def tibbers(self):
+        print("티버: 피해량 {0:2}".format(ability_power*0.65 + 400))
+
+
+
+health, mana, ability_power = map(float, input().split())
+
+x = Annie(health = health, mana = mana, ability_power=ability_power)
+x.tibbers()
